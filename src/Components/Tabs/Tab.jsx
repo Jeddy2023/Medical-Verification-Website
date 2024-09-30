@@ -29,7 +29,8 @@ const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnese
         const fetchUserData = async () => {
             try {
                 const response = await api.post("/users/profile");
-                setUserData(response.data);
+                console.log(response)
+                setUserData(response?.data);
                 setFormData((prevFormData) => ({
                     ...prevFormData,
                     user_id: response?.data?.user?.id,
