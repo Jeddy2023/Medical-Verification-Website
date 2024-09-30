@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './global.css';
-// import Home from './pages/Home/Home';
+import Home from './pages/Home/Home';
 import Manufacturer from './pages/Manufacturer/Manufacturer';
 import HospitalPage from './pages/Manufacturer/Hospitals/Hospitals';
 import Manufacturers from './pages/Admin/Manufacturers/Manufacturers';
@@ -18,7 +18,7 @@ function App() {
     <MantineProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<HeroSection />} />
+          <Route path="/" element={<Home />} />
           <Route path="/auth/register" element={<Signup />} />
           <Route path="/auth/login" element={<Login />} />
           <Route path="/Manufacturer" element={<Manufacturer />} />

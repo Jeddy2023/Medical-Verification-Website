@@ -4,6 +4,7 @@ import './signup.css';
 import { api } from '../../api/axios';
 import { Button } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 // Zod schema for form validation
 const signupSchema = z.object({
@@ -64,6 +65,7 @@ const Signup = () => {
             navigate('/auth/login');
         } catch (error) {
             console.log(error);
+            toast.error(error?.response?.data?.error || 'Registeration failed, try again later')
         } finally {
             setIsLoading(false);
         }
@@ -78,21 +80,19 @@ const Signup = () => {
     };
 
     return (
-        <main className="signup-container">
-            <div className="signup-form">
-                <h2 style={{ textAlign: 'center' }}>Manufacturer Registration</h2>
-                <p>Sign up with your email and get started.</p>
-
+        <div className="login-container">
+            <div className="login-left">
+                <h1>Welcome back to Medic Verify</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <input
                             type="text"
-                            name="name" 
+                            name="name"
                             placeholder="Company Name"
-                            value={formData.name} 
+                            value={formData.name}
                             onChange={handleChange}
                         />
-                        {errors.name && <span className="error">{errors.name}</span>} 
+                        {errors.name && <span className="error">{errors.name}</span>}
                     </div>
 
                     <div className="form-group">
@@ -134,10 +134,17 @@ const Signup = () => {
                         {errors.confirmPassword && <span className="error">{errors.confirmPassword}</span>}
                     </div>
 
-                    <Button type='submit' w={'100%'} color={'#0000cc'} loading={isLoading}>Create Account</Button>
+                    <Button type="submit" className="login-btn" color='#0911ff9a' w={'100%'} size='lg' loading={isLoading}>Register</Button>
                 </form>
+
+                <p className="signup-link">
+                    Have an account Already? <a href="/auth/login">Login!</a>
+                </p>
             </div>
-        </main>
+            <div className="login-right">
+                <img src="https://images.pexels.com/photos/5722881/pexels-photo-5722881.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Fluid Design" />
+            </div>
+        </div>
     );
 };
 

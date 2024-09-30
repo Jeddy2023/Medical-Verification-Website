@@ -10,6 +10,11 @@
   position: relative;
 }
 
+.error {
+  color: #ff6b6b;
+  margin-top: 20px;
+}
+
 .hero-content {
   width: 80%;
   padding: 40px;

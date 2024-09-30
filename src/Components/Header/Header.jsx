@@ -16,14 +16,14 @@ const Header = () => {
       <header>
         <nav>
           <div className="logo">Medic Verify</div>
-          <ul>
+          {/* <ul>
             <li><Link>Home</Link></li>
             <li><Link>About Us</Link></li>
             <li><Link>Contact</Link></li>
-          </ul>
+          </ul> */}
           <div className='details'>
-            <Link to={'/Login'}>Login</Link>
-            <Link>Register</Link>
+            <Link to={'/auth/login'}>Login</Link>
+            <Link to={'/auth/register'}>Register</Link>
           </div>
           <img src={Hamburger} alt='Hamburger' onClick={toggleDropdown}/>
         </nav>

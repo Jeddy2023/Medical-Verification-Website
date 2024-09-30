@@ -1,22 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Confetti from 'react-confetti';
 import { api } from '../../api/axios';
 import './HeroSection.css';
 
 const HeroSection = () => {
-  const [code, setCode] = useState(''); 
-  const [isLoading, setIsLoading] = useState(false); 
-  const [verificationResult, setVerificationResult] = useState(null); 
-  const [error, setError] = useState(''); 
+  const [code, setCode] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [verificationResult, setVerificationResult] = useState(null);
+  const [error, setError] = useState('');
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setVerificationResult(null); 
-    setError(''); 
+    setVerificationResult(null);
+    setError('');
 
     try {
       const response = await api.post('/medicine/verification-code', { code });
-      setVerificationResult(response.data); 
+      setVerificationResult(response.data);
+      setShowConfetti(true);
+
+      setTimeout(() => {
+        setShowConfetti(false);
+      }, 10000);
+
     } catch (err) {
       console.error(err);
       setError('Verification failed. Please check the code and try again.');
@@ -36,7 +44,7 @@ const HeroSection = () => {
               type="text"
               placeholder="Example: XH562193728K"
               value={code}
-              onChange={(e) => setCode(e.target.value)} 
+              onChange={(e) => setCode(e.target.value)}
               required
             />
             <button type="submit" disabled={isLoading}>
@@ -45,7 +53,6 @@ const HeroSection = () => {
           </form>
         </div>
 
-        {/* Display verification result in table format */}
         {verificationResult && (
           <div className="verification-result">
             <h2>Medicine Details</h2>
@@ -80,8 +87,19 @@ const HeroSection = () => {
           </div>
         )}
 
-        {/* Display error message if any */}
-        {error && <p style={{color: 'red'}}>{error}</p>}
+        {error && (
+          <div style={{ color: 'red', marginTop: '1rem' }}>
+            <p style={{ color: 'red'}}>{error}</p>
+            <p>
+              For more information about the problem, please contact us at{' '}
+              <a href="tel:+1234567890" style={{ color: 'blue', textDecoration: 'underline' }}>
+                +1234567890
+              </a>.
+            </p>
+          </div>
+        )}
+
+        {showConfetti && <Confetti />}
       </div>
     </section>
   );
