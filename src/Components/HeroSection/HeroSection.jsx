@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
-import { api } from '../../api/axios'; // Make sure this points to the correct API file
+import { api } from '../../api/axios';
 import './HeroSection.css';
 
 const HeroSection = () => {
-  const [code, setCode] = useState(''); // State to store the input value
-  const [isLoading, setIsLoading] = useState(false); // Loading state for button
-  const [verificationResult, setVerificationResult] = useState(null); // State to store API response
-  const [error, setError] = useState(''); // State to store any error
+  const [code, setCode] = useState(''); 
+  const [isLoading, setIsLoading] = useState(false); 
+  const [verificationResult, setVerificationResult] = useState(null); 
+  const [error, setError] = useState(''); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setVerificationResult(null); // Reset result on new submission
-    setError(''); // Reset the error on new submission
+    setVerificationResult(null); 
+    setError(''); 
 
     try {
       const response = await api.post('/medicine/verification-code', { code });
-      setVerificationResult(response.data); // Store API response data
+      setVerificationResult(response.data); 
     } catch (err) {
       console.error(err);
       setError('Verification failed. Please check the code and try again.');
@@ -81,7 +81,7 @@ const HeroSection = () => {
         )}
 
         {/* Display error message if any */}
-        {error && <p className="error-message">{error}</p>}
+        {error && <p style={{color: 'red'}}>{error}</p>}
       </div>
     </section>
   );
