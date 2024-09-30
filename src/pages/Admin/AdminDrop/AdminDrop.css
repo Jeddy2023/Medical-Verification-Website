@@ -1,0 +1,59 @@
+.admindrop-down {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    gap: 20px;
+    width: 100vw; 
+    height: calc(101vh - 60px); /* Adjust height to take full screen minus the navbar height */
+    transition: 0.5s ease-in-out;
+    place-items: center;
+    position: fixed; 
+    top: 60px; /* Ensure it starts below the navbar */
+    left: 0; 
+    background-color: white;
+    z-index: 999; /* Ensure the dropdown goes under the navbar */
+    padding-top: 20px;
+}
+
+.dropclosed {
+    height: 0;
+    overflow-y: hidden;
+    visibility: hidden;
+}
+
+.admindrop-down ul {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    place-items: center;
+    width: 100%;
+}
+.admindrop-down ul li{
+    list-style-type: none;
+}
+.admindrop-down ul li a{
+    text-decoration: none;
+}
+.admindrop-down div {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    gap: 20px;
+    width: 100%;
+    padding-left: 20px;
+}
+
+.admindrop-down div a {
+    text-decoration: none;
+    width: fit-content;
+}
+
+.admindrop-down .dropdownLogout button {
+    background: linear-gradient(45deg, #2e379a, #5e6af1, #206ab9);
+    color: white;
+    padding: 15px 40px;
+    border-radius: 30px;
+    border: none;
+    width: fit-content;
+}

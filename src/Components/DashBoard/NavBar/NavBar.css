@@ -1,0 +1,52 @@
+.dashTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Ensure navbar stays above other elements */
+    padding: 0 20px;
+    padding-left: 15px;
+    padding-top: 5px;
+    border-bottom: 2px solid #bad2ebe5;
+    
+}
+
+.dashTitle button {
+    background: linear-gradient(45deg, #2e379a, #5e6af1, #206ab9);
+    border: 0;
+    padding: 15px 40px;
+    color: white;
+    border-radius: 100px;
+    z-index: 1000;
+}
+
+.user {
+    display: flex;
+    gap: 10px;  
+    align-items: center;
+    height: fit-content;
+}
+
+.user p {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.dashTitle img.hamburger {
+    display: none;
+    z-index: 1001;
+}
+
+@media screen and (max-width: 768px) {
+    .dashTitle img.hamburger {
+        display: block;
+        height: 40px;
+        width: 40px;
+    }
+    
+    .logoutButton{
+        display: none; /* Hide the logout button in the navbar on small screens */
+    }
+}

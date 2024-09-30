@@ -1,0 +1,169 @@
+.hero-container {
+  padding: 25px 0;
+  min-height: 100vh;
+  background: linear-gradient(45deg, #2e379a, #5e6af1, #206ab9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  position: relative;
+}
+
+.hero-content {
+  width: 80%;
+  padding: 40px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.hero-content h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #ffffff;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.hero-content p {
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 40px;
+  color: #f1f1f1;
+}
+
+.tracker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 10px;
+  border-radius: 50px;
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.tracker input {
+  background-color: transparent;
+  padding: 15px 20px;
+  border: none;
+  font-size: 1rem;
+  color: #ffffff;
+  width: 300px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.tracker input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.tracker button {
+  padding: 15px 30px;
+  border-radius: 50px;
+  border: none;
+  font-size: 1rem;
+  color: #2e379a;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tracker button:hover {
+  background: linear-gradient(45deg, #2e379a, #5e6af1, #206ab9);
+  color: white;
+}
+
+.verification-result {
+  margin-top: 40px;
+}
+
+.verification-result h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #fff;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.verification-result table {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.verification-result th,
+.verification-result td {
+  padding: 15px;
+  text-align: left;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.verification-result th {
+  background-color: rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+}
+
+.verification-result td {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.error-message {
+  color: #ff6b6b;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 3rem;
+  }
+
+  .hero-content p {
+    font-size: 1.2rem;
+  }
+
+  .tracker {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .tracker input {
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .tracker button {
+    width: 100%;
+  }
+
+  .verification-result table {
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .tracker input {
+    font-size: 0.9rem;
+  }
+
+  .tracker button {
+    font-size: 0.9rem;
+  }
+}

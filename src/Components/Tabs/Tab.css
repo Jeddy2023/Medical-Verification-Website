@@ -1,0 +1,61 @@
+.TabContainer{
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-bottom: 30px;
+    height: fit-content;
+}
+.tabs{
+    display: flex;
+    height: 10vh;
+}
+.tabs button{
+    padding: 10px 30px;
+    background-color: white;
+    border: none;
+    font-weight: bold;
+}
+.activeTab{
+    background-color: rgb(214, 204, 231) !important;
+}
+.tab-content form{
+    padding: 20px;
+    padding-left: 40px;
+    padding-top: 0px;
+    background-color: rgb(214, 204, 231) !important;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    height: fit-content;
+}
+.tab-content form h3{
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 255, 0.26);
+}
+.tab-content form label{
+    font-weight: bold;
+}
+.tab-content form button{
+    background-color: rgb(146, 106, 214) !important;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 20px;
+    font-size: 15px;
+    width: fit-content;
+}
+.Fields{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.Field{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: fit-content;
+}
+.Field input{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+}

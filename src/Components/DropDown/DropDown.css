@@ -1,0 +1,50 @@
+.drop-down {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    gap: 40px;
+    width: 100vw; 
+    height: 100vh; 
+    transition: 0.5s ease-in-out;
+    place-items: center;
+    position: fixed; 
+    top: 0px;
+    left: 0; 
+    padding-top: 60px;
+    background-color: white;
+    z-index: 10; 
+}
+
+.closed {
+    height: 0;
+    overflow-y: hidden;
+}
+
+.drop-down ul {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+}
+
+.drop-down div {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    gap: 50px;
+    width: 100%;
+    padding-left: 20px;
+}
+
+.drop-down div a {
+    text-decoration: none;
+    width: fit-content;
+}
+
+.drop-down div a:nth-child(2) {
+    background: linear-gradient(45deg, #2e379a, #5e6af1, #206ab9);
+    color: white;
+    padding: 15px 140px;
+    padding-right: 135px;
+    border-radius: 30px;
+}
