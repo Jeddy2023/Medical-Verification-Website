@@ -4,6 +4,7 @@ import './Tab.css';
 import { api } from "../../api/axios";
 import { Button, Table } from "@mantine/core";
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import toast from "react-hot-toast";
 
 const tabSchema = z.object({
     name: z.string().nonempty({ message: 'Name is required.' }),
@@ -50,7 +51,7 @@ const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnese
     const fetchAllUsers = async () => {
         try {
             const response = await api.get("/users");
-            console.log("This is the response ",response);
+            console.log("This is the response ", response);
             setUserData(response?.data?.data);
         } catch (error) {
             console.error("Error fetching users:", error);
@@ -98,6 +99,16 @@ const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnese
             };
 
             const response = await api.post("/medicine", payload);
+            
+            toast.success('Drug added successfully!');
+
+            setFormData({
+                name: '',
+                description: '',
+                manufactureDate: '',
+                expirationDate: '',
+                user_id: formData.user_id, 
+            });
         } catch (error) {
             console.error(error);
         } finally {
@@ -105,7 +116,7 @@ const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnese
         }
     };
 
-    console.log("This is the userdata ",userData);
+    console.log("This is the userdata ", userData);
 
     const handleEdit = (userId) => {
         console.log(`Edit user with ID: ${userId}`);
