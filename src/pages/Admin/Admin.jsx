@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import SideBar from "../../Components/DashBoard/SideBar/SideBar";
 import ManusideBar from "./ManusideBar";
 import './Admin.css';
 import NavBar from "../../Components/DashBoard/NavBar/NavBar";
 import Metrics from "./Metrics/Metrics";
 import Activity from "./Activity/Activity";
+import { UserContext } from "../../context/userContext";
+import { Navigate } from "react-router-dom";
 
 const adminLinks = [
     { path: "/", label: "Dashboard" },
@@ -13,6 +15,12 @@ const adminLinks = [
 ];
 
 const Admin = () => {
+    const { accessToken } = useContext(UserContext);
+
+    if (!accessToken) {
+        return <Navigate to="/auth/login" replace />;
+    }
+
     return (
         <div className="ManufacturerScreen">
             <SideBar sideBarData={ManusideBar} />
