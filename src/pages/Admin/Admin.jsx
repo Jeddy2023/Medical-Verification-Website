@@ -9,7 +9,7 @@ import Activity from "./Activity/Activity";
 const adminLinks = [
     { path: "/", label: "Dashboard" },
     { path: "/manufacturers", label: "Manufacturers" },
-    { path: "/requests", label: "Requests" }
+    // { path: "/requests", label: "Requests" }
 ];
 
 const Admin = () => {

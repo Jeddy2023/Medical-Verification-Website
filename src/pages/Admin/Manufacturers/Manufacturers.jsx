@@ -12,7 +12,7 @@ const Manufacturers = () => {
             <div className="ManufacturerContent">
                 <NavBar nameofPage="Admin" />
                 <div className="ManufactureGrid">
-                    <TabComponent tabOne="Add Manufacturers" tabTwo="All Manufacturers" tabOneHeader="ADD MANUFACTURER" tabOnefirstLabel="Manufacturer" tabOnesecondLabel="Description" AddButton="Add Manufacturer"/>
+                    <TabComponent tabTwo="All Manufacturers" showTabtwo={true} tabOneHeader="ADD MANUFACTURER" tabOnefirstLabel="Manufacturer" tabOnesecondLabel="Description" AddButton="Add Manufacturer"/>
                 </div>
             </div>
         </div>

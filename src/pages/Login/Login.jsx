@@ -50,6 +50,10 @@ const Login = () => {
 
       const response = await api.post("/auth/login", formData);
       login(response?.data);
+      if(formData.email == 'admin@gmail.com' && response?.data?.accessToken){
+        navigate('/admin');
+        return;
+      } 
       navigate('/Manufacturer');
     } catch (error) {
       console.log(error);

@@ -14,12 +14,12 @@ export const ManusideBar = [
         icon: <MdFactory className="icon"/>,
         path: '/Admin/Manufacturers'
     },
-    {
-        title: "Requests",
-        icon: <IoGitPullRequestSharp className="icon"/>,
-        path: '/Admin/Requests'
+    // {
+    //     title: "Requests",
+    //     icon: <IoGitPullRequestSharp className="icon"/>,
+    //     path: '/Admin/Requests'
 
-    }
+    // }
 ]
 
 export default ManusideBar

@@ -12,7 +12,7 @@ const HospitalPage = () => {
             <div className="ManufacturerContent">
                 <NavBar nameofPage="Manufacturer" />
                 <div className="ManufactureGrid">
-                    <TabComponent tabOne="Add Drug" tabTwo="All Drugs" tabOneHeader="ADD DRUGS" tabOnefirstLabel="Drug Name" tabOnesecondLabel="Manufactured Date" AddButton="Add Drug" tabOnethirdLabel="Expiration Date" tabOnefourLabel="Medical Description"/>
+                    <TabComponent tabOne="Add Drug" tabOneHeader="ADD DRUGS" tabOnefirstLabel="Drug Name" tabOnesecondLabel="Manufactured Date" AddButton="Add Drug" tabOnethirdLabel="Expiration Date" tabOnefourLabel="Medical Description"/>
                 </div>
             </div>
         </div>

@@ -1,61 +1,163 @@
-.TabContainer{
-    padding-top: 10px;
-    padding-left: 20px;
+/* Container and Tab Styles */
+.TabContainer {
+    padding: 20px;
     padding-bottom: 30px;
     height: fit-content;
+    background-color: #f9f9f9;
 }
-.tabs{
+
+.tabs {
     display: flex;
-    height: 10vh;
+    height: 50px;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 20px;
 }
-.tabs button{
+
+.tabs button {
     padding: 10px 30px;
     background-color: white;
     border: none;
     font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
-.activeTab{
-    background-color: rgb(214, 204, 231) !important;
+
+.tabs button:hover {
+    background-color: #e6e6e6;
 }
-.tab-content form{
-    padding: 20px;
-    padding-left: 40px;
-    padding-top: 0px;
-    background-color: rgb(214, 204, 231) !important;
+
+.activeTab {
+    background-color: #9270d2 !important;
+    color: white;
+}
+
+/* Form Styles */
+.tab-content form {
+    padding: 20px 40px;
+    background-color: #f2f0fa;
     display: flex;
     flex-direction: column;
-    gap: 40px;
-    height: fit-content;
+    gap: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
-.tab-content form h3{
+
+.tab-content form h3 {
     padding-bottom: 10px;
-    border-bottom: 1px solid rgba(0, 0, 255, 0.26);
+    border-bottom: 2px solid #9270d2;
+    color: #333;
 }
-.tab-content form label{
+
+.tab-content form label {
     font-weight: bold;
+    color: #555;
 }
-.tab-content form button{
-    background-color: rgb(146, 106, 214) !important;
+
+.tab-content form button {
+    background-color: #9270d2 !important;
     padding: 15px 40px;
     border: none;
     border-radius: 20px;
     font-size: 15px;
     width: fit-content;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
-.Fields{
+
+.tab-content form button:hover {
+    background-color: #805bb0 !important;
+}
+
+/* Form Field Styles */
+.Fields {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.Field {
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-.Field{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: fit-content;
-}
-.Field input{
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
     width: 100%;
+}
+
+.Field input {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 14px;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.Field input:focus {
+    outline: none;
+    border-color: #9270d2;
+    box-shadow: 0 0 5px rgba(146, 112, 214, 0.5);
+}
+
+/* Error message styles */
+.error {
+    color: red;
+    font-size: 12px;
+}
+
+/* Table Styles */
+.user-list {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.user-list th, .user-list td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-list th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.user-list td {
+    background-color: #fff;
+}
+
+.user-list tr:hover {
+    background-color: #f1f1f1;
+}
+
+.user-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+.user-actions button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.user-actions button:hover {
+    color: #805bb0;
+}
+
+.user-actions .edit-icon {
+    color: #4caf50;
+}
+
+.user-actions .delete-icon {
+    color: #f44336;
 }

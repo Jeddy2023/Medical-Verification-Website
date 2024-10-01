@@ -11,7 +11,6 @@ import Signup from './pages/Signup/Signup';
 import Login from './pages/Login/Login';
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
-import HeroSection from './Components/HeroSection/HeroSection';
 
 function App() {
   return (
@@ -19,7 +18,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/auth/register" element={<Signup />} />
+          <Route path="/auth/register" element={<Signup />} /> 
           <Route path="/auth/login" element={<Login />} />
           <Route path="/Manufacturer" element={<Manufacturer />} />
           <Route path="/Manufacturer/Hospitals" element={<HospitalPage />} />
@@ -34,3 +33,20 @@ function App() {
 }
 
 export default App;
+
+
+
+// import React, { useContext } from 'react'
+// import { Navigate } from 'react-router-dom'
+// import { UserContext } from '../../hooks/userContext'
+
+// const AuthProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+//   const { accessToken, loading  } = useContext(UserContext)
+
+//   if (!loading && !accessToken) {
+//     return <Navigate to={"/auth/login"} replace/>
+//   }
+//   return children
+// }
+
+// export default AuthProtectedRoute

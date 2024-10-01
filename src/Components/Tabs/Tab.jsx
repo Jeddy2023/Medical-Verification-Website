@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { z } from "zod";
 import './Tab.css';
 import { api } from "../../api/axios";
-import { Button } from "@mantine/core";
-import { UserContext } from "../../context/userContext";
+import { Button, Table } from "@mantine/core";
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 const tabSchema = z.object({
     name: z.string().nonempty({ message: 'Name is required.' }),
@@ -12,15 +12,15 @@ const tabSchema = z.object({
     expirationDate: z.string().nonempty({ message: 'Expiration date is required.' }),
 });
 
-const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnesecondLabel, tabOnethirdLabel, tabOnefourLabel, AddButton }) => {
-    const [activeTab, setActiveTab] = useState(0);
+const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnesecondLabel, tabOnethirdLabel, tabOnefourLabel, AddButton, showTabtwo }) => {
+    const [activeTab, setActiveTab] = useState(showTabtwo ? 1 : 0);
     const [userData, setUserData] = useState([]);
     const [formData, setFormData] = useState({
         name: '',
         description: '',
         manufactureDate: '',
         expirationDate: '',
-        user_id: userData?.id,
+        user_id: null,
     });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
@@ -29,8 +29,6 @@ const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnese
         const fetchUserData = async () => {
             try {
                 const response = await api.post("/users/profile");
-                console.log(response)
-                setUserData(response?.data);
                 setFormData((prevFormData) => ({
                     ...prevFormData,
                     user_id: response?.data?.user?.id,
@@ -42,6 +40,22 @@ const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnese
 
         fetchUserData();
     }, []);
+
+    useEffect(() => {
+        if (activeTab === 1) {
+            fetchAllUsers();
+        }
+    }, [activeTab]);
+
+    const fetchAllUsers = async () => {
+        try {
+            const response = await api.get("/users");
+            console.log("This is the response ",response);
+            setUserData(response?.data?.data);
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        }
+    };
 
     const handleTabClick = (index) => {
         setActiveTab(index);
@@ -91,15 +105,25 @@ const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnese
         }
     };
 
+    console.log("This is the userdata ",userData);
+
+    const handleEdit = (userId) => {
+        console.log(`Edit user with ID: ${userId}`);
+    };
+
+    const handleDelete = (userId) => {
+        console.log(`Delete user with ID: ${userId}`);
+    };
+
     return (
         <div className="TabContainer">
             <div className="tabs">
-                <button className={activeTab === 0 ? 'activeTab' : ''} onClick={() => handleTabClick(0)}>{tabOne}</button>
-                <button className={activeTab === 1 ? 'activeTab' : ''} onClick={() => handleTabClick(1)}>{tabTwo}</button>
+                {tabOne && <button className={activeTab === 0 ? 'activeTab' : ''} onClick={() => handleTabClick(0)}>{tabOne}</button>}
+                {tabTwo && <button className={activeTab === 1 ? 'activeTab' : ''} onClick={() => handleTabClick(1)}>{tabTwo}</button>}
             </div>
 
             <div className="tab-content">
-                {activeTab === 0 && (
+                {tabOne && activeTab === 0 && (
                     <form onSubmit={handleSubmit}>
                         <h3>{tabOneHeader}</h3>
                         <div className="Fields">
@@ -128,10 +152,37 @@ const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnese
                     </form>
                 )}
 
-                {activeTab === 1 && (
-                    <form>
-                        {/* Content for tabTwo */}
-                    </form>
+                {tabTwo && activeTab === 1 && (
+                    <div className="user-list">
+                        <h3>User List</h3>
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {userData && userData.map((user) => (
+                                    <tr key={user.id}>
+                                        <td>{user.name}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.role}</td>
+                                        <td>
+                                            <Button variant="subtle" onClick={() => handleEdit(user.id)} compact>
+                                                <FaEdit />
+                                            </Button>
+                                            <Button variant="subtle" color="red" onClick={() => handleDelete(user.id)} compact>
+                                                <FaTrash />
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </div>
                 )}
             </div>
         </div>
