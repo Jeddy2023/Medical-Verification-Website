@@ -13,9 +13,10 @@ const tabSchema = z.object({
     expirationDate: z.string().nonempty({ message: 'Expiration date is required.' }),
 });
 
-const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnesecondLabel, tabOnethirdLabel, tabOnefourLabel, AddButton, showTabtwo }) => {
+const TabComponent = ({ tabOne, tabTwo, tabThree, tabOneHeader, tabOnefirstLabel, tabOnesecondLabel, tabOnethirdLabel, tabOnefourLabel, AddButton, showTabtwo, admin }) => {
     const [activeTab, setActiveTab] = useState(showTabtwo ? 1 : 0);
     const [userData, setUserData] = useState([]);
+    const [drugData, setDrugData] = useState([]);
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -45,6 +46,8 @@ const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnese
     useEffect(() => {
         if (activeTab === 1) {
             fetchAllUsers();
+        } else if (activeTab === 2) {
+            fetchDrugs();
         }
     }, [activeTab]);
 
@@ -55,6 +58,16 @@ const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnese
             setUserData(response?.data?.data);
         } catch (error) {
             console.error("Error fetching users:", error);
+        }
+    };
+
+    const fetchDrugs = async () => {
+        try {
+            const endpoint = admin ? "/medicine" : "/medicine/drugs/manufacturer";
+            const response = await api.get(endpoint);
+            setDrugData(response?.data);
+        } catch (error) {
+            console.error("Error fetching drug data:", error);
         }
     };
 
@@ -99,7 +112,7 @@ const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnese
             };
 
             const response = await api.post("/medicine", payload);
-            
+
             toast.success('Drug added successfully!');
 
             setFormData({
@@ -107,7 +120,7 @@ const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnese
                 description: '',
                 manufactureDate: '',
                 expirationDate: '',
-                user_id: formData.user_id, 
+                user_id: formData.user_id,
             });
         } catch (error) {
             console.error(error);
@@ -116,21 +129,12 @@ const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnese
         }
     };
 
-    console.log("This is the userdata ", userData);
-
-    const handleEdit = (userId) => {
-        console.log(`Edit user with ID: ${userId}`);
-    };
-
-    const handleDelete = (userId) => {
-        console.log(`Delete user with ID: ${userId}`);
-    };
-
     return (
         <div className="TabContainer">
             <div className="tabs">
                 {tabOne && <button className={activeTab === 0 ? 'activeTab' : ''} onClick={() => handleTabClick(0)}>{tabOne}</button>}
                 {tabTwo && <button className={activeTab === 1 ? 'activeTab' : ''} onClick={() => handleTabClick(1)}>{tabTwo}</button>}
+                {tabThree && <button className={activeTab === 2 ? 'activeTab' : ''} onClick={() => handleTabClick(2)}>{tabThree}</button>}
             </div>
 
             <div className="tab-content">
@@ -182,13 +186,41 @@ const TabComponent = ({ tabOne, tabTwo, tabOneHeader, tabOnefirstLabel, tabOnese
                                         <td>{user.email}</td>
                                         <td>{user.role}</td>
                                         <td>
-                                            <Button variant="subtle" onClick={() => handleEdit(user.id)} compact>
+                                            <Button variant="subtle" compact>
                                                 <FaEdit />
                                             </Button>
-                                            <Button variant="subtle" color="red" onClick={() => handleDelete(user.id)} compact>
+                                            <Button variant="subtle" color="red" compact>
                                                 <FaTrash />
                                             </Button>
                                         </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </div>
+                )}
+
+                {tabThree && activeTab === 2 && (
+                    <div className="user-list">
+                        <h3>Drug List</h3>
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Verification Code</th>
+                                    <th>Manufacture Date</th>
+                                    <th>Expiration Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {drugData && drugData.map((drug) => (
+                                    <tr key={drug.id}>
+                                        <td>{drug.name}</td>
+                                        <td>{drug.description}</td>
+                                        <td>{drug.verificationCode}</td>
+                                        <td>{new Date(drug.manufactureDate).toLocaleDateString()}</td>
+                                        <td>{new Date(drug.expirationDate).toLocaleDateString()}</td>
                                     </tr>
                                 ))}
                             </tbody>

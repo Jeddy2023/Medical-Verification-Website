@@ -8,9 +8,9 @@ import { UserContext } from "../../../context/userContext";
 import { Navigate } from "react-router-dom";
 
 const HospitalPage = () => {
-    const { accessToken } = useContext(UserContext);
+    const { accessToken, loading } = useContext(UserContext);
 
-    if (!accessToken) {
+    if (!accessToken && !loading) {
         return <Navigate to="/auth/login" replace />;
     }
 
@@ -20,7 +20,7 @@ const HospitalPage = () => {
             <div className="ManufacturerContent">
                 <NavBar nameofPage="Manufacturer" />
                 <div className="ManufactureGrid">
-                    <TabComponent tabOne="Add Drug" tabOneHeader="ADD DRUGS" tabOnefirstLabel="Drug Name" tabOnesecondLabel="Manufactured Date" AddButton="Add Drug" tabOnethirdLabel="Expiration Date" tabOnefourLabel="Medical Description"/>
+                    <TabComponent tabOne="Add Drug" tabThree="Medicine Listing" tabOneHeader="ADD DRUGS" tabOnefirstLabel="Drug Name" tabOnesecondLabel="Manufactured Date" AddButton="Add Drug" tabOnethirdLabel="Expiration Date" tabOnefourLabel="Medical Description"/>
                 </div>
             </div>
         </div>

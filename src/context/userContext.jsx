@@ -5,12 +5,14 @@ export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
     const [accessToken, setAccessToken] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const accessTokenFromCookie = Cookies.get('accessToken');
         if (accessTokenFromCookie) {
             setAccessToken(accessTokenFromCookie);
         }
+        setLoading(false);
     }, []);
 
     const login = (data) => {
@@ -25,7 +27,7 @@ const UserProvider = ({ children }) => {
     };
 
     return (
-        <UserContext.Provider value={{ accessToken, login, logout }}>
+        <UserContext.Provider value={{ accessToken, login, logout, loading }}>
             {children}
         </UserContext.Provider>
     );

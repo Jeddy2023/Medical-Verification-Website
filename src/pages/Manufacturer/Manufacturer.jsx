@@ -15,9 +15,9 @@ const manufacturerLinks = [
 ];
 
 const Manufacturer = () => {
-    const { accessToken } = useContext(UserContext);
+    const { accessToken, loading } = useContext(UserContext);
 
-    if (!accessToken) {
+    if (!accessToken && !loading) {
         return <Navigate to="/auth/login" replace />;
     }
 
