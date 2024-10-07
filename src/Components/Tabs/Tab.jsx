@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { z } from "zod";
 import './Tab.css';
 import { api } from "../../api/axios";
-import { Button, Table } from "@mantine/core";
+import { Button, Modal, Table } from "@mantine/core";
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import toast from "react-hot-toast";
 
@@ -26,6 +26,10 @@ const TabComponent = ({ tabOne, tabTwo, tabThree, tabOneHeader, tabOnefirstLabel
     });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editDrugId, setEditDrugId] = useState(null);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [drugToDelete, setDrugToDelete] = useState(null);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -54,7 +58,6 @@ const TabComponent = ({ tabOne, tabTwo, tabThree, tabOneHeader, tabOnefirstLabel
     const fetchAllUsers = async () => {
         try {
             const response = await api.get("/users");
-            console.log("This is the response ", response);
             setUserData(response?.data?.data);
         } catch (error) {
             console.error("Error fetching users:", error);
@@ -111,9 +114,17 @@ const TabComponent = ({ tabOne, tabTwo, tabThree, tabOneHeader, tabOnefirstLabel
                 expirationDate: formattedExpirationDate,
             };
 
-            const response = await api.post("/medicine", payload);
-
-            toast.success('Drug added successfully!');
+            if (isEditing) {
+                // Editing mode
+                await api.patch(`/medicine/${editDrugId}`, payload);
+                toast.success('Drug updated successfully!');
+                setIsEditing(false);
+                setEditDrugId(null);
+            } else {
+                // Creating new drug
+                await api.post("/medicine", payload);
+                toast.success('Drug added successfully!');
+            }
 
             setFormData({
                 name: '',
@@ -122,10 +133,39 @@ const TabComponent = ({ tabOne, tabTwo, tabThree, tabOneHeader, tabOnefirstLabel
                 expirationDate: '',
                 user_id: formData.user_id,
             });
+            fetchDrugs();
         } catch (error) {
             console.error(error);
+            toast.error('An error occurred.');
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const handleEdit = (drug) => {
+        setIsEditing(true);
+        setEditDrugId(drug.id);
+
+        setFormData({
+            name: drug.name,
+            description: drug.description,
+            manufactureDate: drug.manufactureDate.split('T')[0],
+            expirationDate: drug.expirationDate.split('T')[0],
+            user_id: formData.user_id,
+        });
+
+        setActiveTab(0);
+    };
+
+    const handleDelete = async () => {
+        try {
+            await api.delete(`/medicine/drugs/${drugToDelete}`);
+            toast.success('Drug deleted successfully!');
+            fetchDrugs();
+        } catch (error) {
+            console.error("Error deleting drug:", error);
+        } finally {
+            setDeleteModalOpen(false);
         }
     };
 
@@ -208,9 +248,8 @@ const TabComponent = ({ tabOne, tabTwo, tabThree, tabOneHeader, tabOnefirstLabel
                                 <tr>
                                     <th>Name</th>
                                     <th>Description</th>
-                                    <th>Verification Code</th>
-                                    <th>Manufacture Date</th>
-                                    <th>Expiration Date</th>
+                                    <th>Verification Status</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -218,9 +257,18 @@ const TabComponent = ({ tabOne, tabTwo, tabThree, tabOneHeader, tabOnefirstLabel
                                     <tr key={drug.id}>
                                         <td>{drug.name}</td>
                                         <td>{drug.description}</td>
-                                        <td>{drug.verificationCode}</td>
-                                        <td>{new Date(drug.manufactureDate).toLocaleDateString()}</td>
-                                        <td>{new Date(drug.expirationDate).toLocaleDateString()}</td>
+                                        <td>{drug.verified ? 'Verified' : 'Not Verified'}</td>
+                                        <td>
+                                            <Button variant="subtle" compact onClick={() => handleEdit(drug)}>
+                                                <FaEdit />
+                                            </Button>
+                                            <Button variant="subtle" color="red" compact onClick={() => {
+                                                setDrugToDelete(drug.id);
+                                                setDeleteModalOpen(true);
+                                            }}>
+                                                <FaTrash />
+                                            </Button>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -228,6 +276,11 @@ const TabComponent = ({ tabOne, tabTwo, tabThree, tabOneHeader, tabOnefirstLabel
                     </div>
                 )}
             </div>
+
+            <Modal opened={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} title="Confirm Delete">
+                <p>Are you sure you want to delete this drug?</p>
+                <Button color="red" onClick={handleDelete}>Delete</Button>
+            </Modal>
         </div>
     );
 };
