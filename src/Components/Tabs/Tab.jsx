@@ -30,6 +30,7 @@ const TabComponent = ({ tabOne, tabTwo, tabThree, tabOneHeader, tabOnefirstLabel
     const [editDrugId, setEditDrugId] = useState(null);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [drugToDelete, setDrugToDelete] = useState(null);
+    const [originalData, setOriginalData] = useState(null);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -40,7 +41,7 @@ const TabComponent = ({ tabOne, tabTwo, tabThree, tabOneHeader, tabOnefirstLabel
                     user_id: response?.data?.user?.id,
                 }));
             } catch (error) {
-                console.error("Error fetching user data:", error.response.data);
+                console.error("Error fetching user data:", error.response);
             }
         };
 
@@ -108,20 +109,34 @@ const TabComponent = ({ tabOne, tabTwo, tabThree, tabOneHeader, tabOnefirstLabel
             const formattedManufactureDate = new Date(formData.manufactureDate).toISOString();
             const formattedExpirationDate = new Date(formData.expirationDate).toISOString();
 
-            const payload = {
-                ...formData,
-                manufactureDate: formattedManufactureDate,
-                expirationDate: formattedExpirationDate,
-            };
+            let payload = {};
 
             if (isEditing) {
-                // Editing mode
-                await api.patch(`/medicine/${editDrugId}`, payload);
-                toast.success('Drug updated successfully!');
+                if (formData.name !== originalData.name) payload.name = formData.name;
+                if (formData.description !== originalData.description) payload.description = formData.description;
+                if (formData.manufactureDate !== originalData.manufactureDate.split('T')[0]) {
+                    payload.manufactureDate = formattedManufactureDate;
+                }
+                if (formData.expirationDate !== originalData.expirationDate.split('T')[0]) {
+                    payload.expirationDate = formattedExpirationDate;
+                }
+
+                if (Object.keys(payload).length > 0) {
+                    await api.patch(`/medicine/${editDrugId}`, payload);
+                    toast.success('Drug updated successfully!');
+                } else {
+                    toast.error('No changes detected.');
+                }
+
                 setIsEditing(false);
                 setEditDrugId(null);
+                setActiveTab(1);
             } else {
-                // Creating new drug
+                payload = {
+                    ...formData,
+                    manufactureDate: formattedManufactureDate,
+                    expirationDate: formattedExpirationDate,
+                };
                 await api.post("/medicine", payload);
                 toast.success('Drug added successfully!');
             }
@@ -146,11 +161,17 @@ const TabComponent = ({ tabOne, tabTwo, tabThree, tabOneHeader, tabOnefirstLabel
         setIsEditing(true);
         setEditDrugId(drug.id);
 
-        setFormData({
+        const originalDrugData = {
             name: drug.name,
             description: drug.description,
             manufactureDate: drug.manufactureDate.split('T')[0],
             expirationDate: drug.expirationDate.split('T')[0],
+        };
+
+        setOriginalData(originalDrugData); 
+
+        setFormData({
+            ...originalDrugData,
             user_id: formData.user_id,
         });
 
