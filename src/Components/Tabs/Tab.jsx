@@ -130,7 +130,7 @@ const TabComponent = ({ tabOne, tabTwo, tabThree, tabOneHeader, tabOnefirstLabel
 
                 setIsEditing(false);
                 setEditDrugId(null);
-                setActiveTab(1);
+                setActiveTab(2);
             } else {
                 payload = {
                     ...formData,
@@ -224,7 +224,7 @@ const TabComponent = ({ tabOne, tabTwo, tabThree, tabOneHeader, tabOnefirstLabel
                                 {errors.expirationDate && <span className="error">{errors.expirationDate}</span>}
                             </div>
                         </div>
-                        <Button type="submit" w={'100%'} loading={isLoading} size="lg">{AddButton}</Button>
+                        <Button type="submit" w={'100%'} loading={isLoading} size="lg">{isEditing ? 'Edit Drug' : AddButton}</Button>
                     </form>
                 )}
 
